@@ -104,6 +104,6 @@ This project implements a complete pipeline for real-time keyword spotting, from
 
 ## 📬 Contact
 
-For questions or collaboration, please open an issue or contact [shubhammeena.iit@gmail.com.com](mailto:your.email@domain.com).
+For questions or collaboration, please open an issue or contact [shubhammeena.iit@gmail.com](mailto:shubhammeena.iit@gmail.com).
 
 ---
