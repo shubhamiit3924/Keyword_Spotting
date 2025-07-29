@@ -51,48 +51,48 @@ def analyze_dataset(csv_file):
         total_features = len(df.columns) - 1  # -1 for the label column
         file_size_mb = os.path.getsize(csv_file) / (1024 * 1024)
         
-        print(f"📁 File size: {file_size_mb:.2f} MB")
-        print(f"📋 Total samples: {total_rows:,}")
-        print(f"🔢 Features per sample: {total_features}")
+        print(f" File size: {file_size_mb:.2f} MB")
+        print(f" Total samples: {total_rows:,}")
+        print(f" Features per sample: {total_features}")
         
         # Validate data integrity
-        print(f"\n🔍 DATA VALIDATION:")
+        print(f"\n DATA VALIDATION:")
         print("-" * 25)
         
         # Check for consistent row length
         row_lengths = df.apply(len, axis=1)
         if row_lengths.nunique() == 1:
-            print(f"✅ All rows have consistent length: {row_lengths.iloc[0]}")
+            print(f" All rows have consistent length: {row_lengths.iloc[0]}")
         else:
-            print(f"❌ Inconsistent row lengths found: {row_lengths.unique()}")
+            print(f" Inconsistent row lengths found: {row_lengths.unique()}")
         
         # Check for missing values
         missing_count = df.isnull().sum().sum()
         if missing_count == 0:
-            print("✅ No missing values (NaN)")
+            print(" No missing values (NaN)")
         else:
-            print(f"❌ Found {missing_count} missing values")
+            print(f" Found {missing_count} missing values")
         
         # Check feature columns for non-numeric data
         feature_cols = df.iloc[:, :-1]  # All except last column
         try:
             feature_cols.astype(float)
-            print("✅ All feature columns are numeric")
+            print(" All feature columns are numeric")
         except:
-            print("❌ Some feature columns contain non-numeric data")
+            print(" Some feature columns contain non-numeric data")
         
         # Check if expected size (1275 columns = 1274 features + 1 label)
         expected_cols = 1275
         if len(df.columns) == expected_cols:
-            print(f"✅ Correct column count: {len(df.columns)} (1274 features + 1 label)")
+            print(f" Correct column count: {len(df.columns)} (1274 features + 1 label)")
         else:
-            print(f"❌ Expected {expected_cols} columns, got {len(df.columns)}")
+            print(f" Expected {expected_cols} columns, got {len(df.columns)}")
         
         # Get label counts (last column contains labels)
         labels = df.iloc[:, -1]  # Last column
         label_counts = Counter(labels)
         
-        print(f"\n🏷️  LABEL DISTRIBUTION:")
+        print(f"\n  LABEL DISTRIBUTION:")
         print("-" * 30)
         for label, count in sorted(label_counts.items()):
             percentage = (count / total_rows) * 100
@@ -108,10 +108,10 @@ def analyze_dataset(csv_file):
         return label_counts, total_rows, file_size_mb
         
     except FileNotFoundError:
-        print(f"❌ File not found: {csv_file}")
+        print(f" File not found: {csv_file}")
         return None, 0, 0
     except Exception as e:
-        print(f"❌ Error reading file: {e}")
+        print(f" Error reading file: {e}")
         return None, 0, 0
 
 # Path setup
@@ -166,7 +166,7 @@ with open(output_csv, mode='w', newline='', encoding='utf-8') as f:
                     
                     # Final validation
                     if len(row) != 1275:
-                        print(f"⚠️  Skipping {fname}: Row length {len(row)} != 1275")
+                        print(f"⚠  Skipping {fname}: Row length {len(row)} != 1275")
                         error_count += 1
                         continue
                     
@@ -174,14 +174,14 @@ with open(output_csv, mode='w', newline='', encoding='utf-8') as f:
                     processed_count += 1
                     
                 except Exception as e:
-                    print(f"❌ Error processing {file_path}: {e}")
+                    print(f" Error processing {file_path}: {e}")
                     error_count += 1
                     continue
 
-print(f"✅ CSV dataset created successfully!")
-print(f"📊 Processed: {processed_count} samples")
-print(f"❌ Errors: {error_count} samples")
-print(f"📁 Saved to: {output_csv}")
+print(f" CSV dataset created successfully!")
+print(f" Processed: {processed_count} samples")
+print(f" Errors: {error_count} samples")
+print(f" Saved to: {output_csv}")
 
 # Analyze the dataset
 analyze_dataset(output_csv)
